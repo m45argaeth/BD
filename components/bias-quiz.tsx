@@ -42,11 +42,14 @@ export function BiasQuiz() {
 
   const scenario = SCENARIOS[pointer]
   const bias = BIAS_MAP.get(scenario.biasSlug)
+  const isBiased = selected !== null && selected === scenario.biasedOptionId
 
   function choose(optionId: string) {
     if (selected) return
     setSelected(optionId)
-    setProfile(recordBias(scenario.biasSlug))
+    if (optionId === scenario.biasedOptionId) {
+      setProfile(recordBias(scenario.biasSlug))
+    }
   }
 
   function next() {
@@ -162,9 +165,14 @@ export function BiasQuiz() {
         <Card className="animate-fade-in border-primary/30">
           <CardHeader className="space-y-3">
             <div className="flex items-center gap-2">
-              <Badge>{tp.detectedBias}</Badge>
+              <Badge variant={isBiased ? "default" : "secondary"}>
+                {isBiased ? tp.detectedBias : tp.avoidedBias}
+              </Badge>
             </div>
             <CardTitle className="text-2xl">{bias.name[locale]}</CardTitle>
+            <p className="text-sm font-medium">
+              {isBiased ? tp.biasedNote : tp.awareNote}
+            </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
               {scenario.analysis[locale]}
             </p>

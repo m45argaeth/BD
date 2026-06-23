@@ -10,6 +10,8 @@ export interface Scenario {
   biasSlug: string
   prompt: Localized
   options: ScenarioOption[]
+  /** The option id that reflects the cognitive bias. */
+  biasedOptionId: string
   analysis: Localized
 }
 
@@ -34,9 +36,10 @@ export const SCENARIOS: Scenario[] = [
         },
       },
     ],
+    biasedOptionId: "yes",
     analysis: {
-      id: "Banyak orang langsung terpaku pada harga awal Rp3 juta sebagai acuan. Inilah Bias Penjangkaran (Anchoring).",
-      en: "Many people fixate on the original $300 as a reference point. This is Anchoring Bias.",
+      id: "Harga awal Rp3 juta menjadi jangkar yang membuat Rp1,5 juta terasa murah, padahal belum tentu sesuai nilai wajarnya. Inilah Bias Penjangkaran (Anchoring).",
+      en: "The original $300 acts as an anchor that makes $150 feel cheap, even if it isn't actually fair value. This is Anchoring Bias.",
     },
   },
   {
@@ -56,9 +59,10 @@ export const SCENARIOS: Scenario[] = [
         label: { id: "Artikel yang mengkritiknya", en: "Articles criticizing it" },
       },
     ],
+    biasedOptionId: "support",
     analysis: {
-      id: "Lebih memilih bukti yang mendukung keyakinan bisa menandakan Bias Konfirmasi.",
-      en: "Preferring evidence that supports your belief may indicate Confirmation Bias.",
+      id: "Memilih hanya bukti yang mendukung keyakinan, sambil menghindari yang bertentangan, adalah ciri khas Bias Konfirmasi.",
+      en: "Choosing only evidence that supports your belief while avoiding what contradicts it is the hallmark of Confirmation Bias.",
     },
   },
   {
@@ -78,9 +82,10 @@ export const SCENARIOS: Scenario[] = [
         label: { id: "Berkendara mobil", en: "Driving a car" },
       },
     ],
+    biasedOptionId: "flying",
     analysis: {
-      id: "Peristiwa dramatis yang baru terlihat sering mengaburkan persepsi risiko. Inilah Heuristik Ketersediaan.",
-      en: "Recent, memorable events often distort risk perception. This is the Availability Heuristic.",
+      id: "Secara statistik berkendara lebih berisiko, tetapi berita kecelakaan pesawat yang dramatis lebih mudah teringat sehingga terasa lebih berbahaya. Inilah Heuristik Ketersediaan.",
+      en: "Statistically driving is riskier, but dramatic plane-crash news is easier to recall, making flying feel more dangerous. This is the Availability Heuristic.",
     },
   },
   {
@@ -103,9 +108,10 @@ export const SCENARIOS: Scenario[] = [
         },
       },
     ],
+    biasedOptionId: "sure",
     analysis: {
-      id: "Banyak orang memilih yang pasti karena lebih takut rugi daripada menghargai potensi untung. Inilah Penghindaran Kerugian.",
-      en: "Many pick the sure thing because they fear losses more than they value gains. This is Loss Aversion.",
+      id: "Secara nilai harapan, peluang 50% untung Rp250rb (Rp125rb) lebih tinggi daripada Rp100rb pasti. Memilih yang pasti karena takut rugi menunjukkan Penghindaran Kerugian.",
+      en: "By expected value, a 50% chance at $250 ($125) beats a sure $100. Choosing the sure thing out of fear of losing reflects Loss Aversion.",
     },
   },
   {
@@ -121,13 +127,14 @@ export const SCENARIOS: Scenario[] = [
         label: { id: "Yogurt '90% bebas lemak'", en: "Yogurt that is '90% fat-free'" },
       },
       {
-        id: "ten",
-        label: { id: "Yogurt 'mengandung 10% lemak'", en: "Yogurt that 'contains 10% fat'" },
+        id: "same",
+        label: { id: "Keduanya sama saja", en: "They are exactly the same" },
       },
     ],
+    biasedOptionId: "ninety",
     analysis: {
-      id: "Keduanya identik, tetapi cara penyajiannya mengubah penilaianmu. Inilah Efek Pembingkaian.",
-      en: "Both are identical, but the wording changes your judgment. This is the Framing Effect.",
+      id: "'90% bebas lemak' dan 'mengandung 10% lemak' adalah hal yang identik, tetapi bingkai positif terasa lebih sehat. Inilah Efek Pembingkaian.",
+      en: "'90% fat-free' and 'contains 10% fat' are identical, yet the positive frame feels healthier. This is the Framing Effect.",
     },
   },
   {
@@ -150,9 +157,10 @@ export const SCENARIOS: Scenario[] = [
         },
       },
     ],
+    biasedOptionId: "join",
     analysis: {
-      id: "Mengikuti karena 'semua orang melakukannya' bisa menandakan Efek Ikut-ikutan.",
-      en: "Following because 'everyone is doing it' may indicate the Bandwagon Effect.",
+      id: "Mengikuti hanya karena 'semua orang melakukannya', tanpa menimbang kebutuhanmu sendiri, adalah Efek Ikut-ikutan.",
+      en: "Following just because 'everyone is doing it', without weighing your own needs, is the Bandwagon Effect.",
     },
   },
   {
@@ -175,9 +183,10 @@ export const SCENARIOS: Scenario[] = [
         label: { id: "Berhenti dan lakukan hal lain", en: "Stop and do something else" },
       },
     ],
+    biasedOptionId: "finish",
     analysis: {
-      id: "Melanjutkan hanya karena sudah terlanjur menghabiskan waktu adalah Kekeliruan Biaya Hangus.",
-      en: "Continuing only because you've already spent time is the Sunk Cost Fallacy.",
+      id: "Satu jam yang sudah lewat tidak akan kembali apa pun pilihanmu. Melanjutkan hanya karena 'sudah terlanjur' adalah Kekeliruan Biaya Hangus.",
+      en: "The hour already spent won't return whatever you choose. Continuing only because you're 'already in' is the Sunk Cost Fallacy.",
     },
   },
   {
@@ -200,9 +209,10 @@ export const SCENARIOS: Scenario[] = [
         },
       },
     ],
+    biasedOptionId: "attractive",
     analysis: {
-      id: "Membiarkan penampilan memengaruhi penilaian kompetensi adalah Efek Halo.",
-      en: "Letting appearance influence judgments of competence is the Halo Effect.",
+      id: "Membiarkan satu kesan positif (penampilan) memengaruhi penilaian atas kompetensi yang tak berkaitan adalah Efek Halo.",
+      en: "Letting one positive impression (looks) sway your judgment of unrelated competence is the Halo Effect.",
     },
   },
 ]
