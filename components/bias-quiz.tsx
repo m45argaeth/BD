@@ -17,7 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { useI18n } from "@/lib/i18n"
-import { SCENARIOS } from "@/lib/data/scenarios"
+import { SCENARIOS, type ScenarioOption } from "@/lib/data/scenarios"
 import { BIASES } from "@/lib/data/biases"
 import {
   clearProfile,
@@ -29,14 +29,27 @@ import { copyText, exportResultPng } from "@/lib/share"
 
 const BIAS_MAP = new Map(BIASES.map((b) => [b.slug, b]))
 
+function shuffle(options: ScenarioOption[]): ScenarioOption[] {
+  const a = [...options]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const tmp = a[i]
+    a[i] = a[j]
+    a[j] = tmp
+  }
+  return a
+}
+
 export function BiasQuiz() {
   const { locale, t } = useI18n()
   const tp = t.playground
   const [pointer, setPointer] = React.useState(0)
   const [selected, setSelected] = React.useState<string | null>(null)
   const [profile, setProfile] = React.useState<ProfileCounts>({})
+  const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
+    setMounted(true)
     setProfile(getProfile())
     try {
       const params = new URLSearchParams(window.location.search)
@@ -59,6 +72,14 @@ export function BiasQuiz() {
   const scenario = SCENARIOS[pointer]
   const bias = BIAS_MAP.get(scenario.biasSlug)
   const isBiased = selected !== null && selected === scenario.biasedOptionId
+
+  // Keep source order until mounted (avoids hydration mismatch), then
+  // shuffle. Reshuffles only when the scenario changes, not on every
+  // selection, so options don't jump around after answering.
+  const displayOptions = React.useMemo(
+    () => (mounted ? shuffle(scenario.options) : scenario.options),
+    [mounted, scenario],
+  )
 
   function choose(optionId: string) {
     if (selected) return
@@ -152,7 +173,7 @@ export function BiasQuiz() {
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">{tp.chooseHint}</p>
           <div className="grid gap-3">
-            {scenario.options.map((opt) => {
+            {displayOptions.map((opt) => {
               const isChosen = selected === opt.id
               return (
                 <button
