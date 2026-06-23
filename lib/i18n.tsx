@@ -105,4 +105,123 @@ const en: Dict = {
     flowBias: "Bias",
     flowConclusion: "Conclusion",
     caption:
-      "Your brain takes shortcuts. S
+      "Your brain takes shortcuts. Sometimes they help. Sometimes they mislead.",
+  },
+  sections: {
+    howTitle: "How it works",
+    howSubtitle: "Three steps, entirely in your browser.",
+    steps: [
+      {
+        title: "1. Read a scenario",
+        body: "You're given an everyday decision-making situation.",
+      },
+      {
+        title: "2. Pick an answer",
+        body: "Choose the option that best describes you \u2014 no right or wrong.",
+      },
+      {
+        title: "3. See the analysis",
+        body: "Discover the cognitive bias that may be at play and how to counter it.",
+      },
+    ],
+    libraryTeaserTitle: "Explore the bias library",
+    libraryTeaserBody:
+      "The ten most common cognitive biases, each with an explanation and tips to avoid it.",
+    browseLibrary: "Open the Library",
+    dailyTitle: "Daily Bias Challenge",
+    dailyBody: "A new scenario every day. No account required.",
+    dailyCta: "Try today's challenge",
+    funFactTitle: "Did you know?",
+  },
+  playground: {
+    title: "Playground",
+    subtitle:
+      "Read the scenario, pick your answer, then see which bias might be at play.",
+    progress: "Scenario",
+    chooseHint: "Pick the answer that fits you best:",
+    next: "Next scenario",
+    random: "Random scenario",
+    restart: "Start over",
+    detectedBias: "Detected bias",
+    whyTitle: "Why it happens",
+    exampleTitle: "Real-world example",
+    tipsTitle: "Tips to avoid it",
+    profileTitle: "My Bias Profile",
+    profileEmpty: "Complete a few scenarios to see your bias patterns.",
+    profileNote: "Educational only. Not a psychological diagnosis.",
+    mostFrequent: "Most frequent biases",
+    times: "times",
+    share: "Share",
+    copyLink: "Copy link",
+    exportPng: "Export PNG",
+    copied: "Copied to clipboard",
+    linkCopied: "Link copied",
+    shareTitle: "My Bias Detector result",
+  },
+  library: {
+    title: "Bias Library",
+    subtitle:
+      "Browse common cognitive biases. Search by a keyword like \"social media\".",
+    searchPlaceholder: "Search a bias or topic\u2026",
+    noResults: "No biases match your search.",
+    whyTitle: "Why it happens",
+    exampleTitle: "Real-world example",
+    tipsTitle: "Tips to avoid it",
+    close: "Close",
+  },
+  footer: {
+    eduNote:
+      "Cognitive biases are normal mental shortcuts. Everyone experiences them. This tool is educational and not a psychological assessment.",
+  },
+}
+
+const DICTS: Record<Locale, Dict> = { id, en }
+
+interface I18nContextValue {
+  locale: Locale
+  setLocale: (locale: Locale) => void
+  t: Dict
+}
+
+const I18nContext = React.createContext<I18nContextValue | null>(null)
+
+export function I18nProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocaleState] = React.useState<Locale>(DEFAULT_LOCALE)
+
+  React.useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null
+      if (stored && LOCALES.includes(stored)) {
+        setLocaleState(stored)
+        document.documentElement.lang = stored
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [])
+
+  const setLocale = React.useCallback((next: Locale) => {
+    setLocaleState(next)
+    try {
+      window.localStorage.setItem(STORAGE_KEY, next)
+      document.documentElement.lang = next
+    } catch {
+      /* ignore */
+    }
+  }, [])
+
+  const value = React.useMemo<I18nContextValue>(
+    () => ({ locale, setLocale, t: DICTS[locale] }),
+    [locale, setLocale],
+  )
+
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
+}
+
+export function useI18n(): I18nContextValue {
+  const ctx = React.useContext(I18nContext)
+  if (!ctx) {
+    throw new Error("useI18n must be used within an I18nProvider")
+  }
+  return ctx
+}
