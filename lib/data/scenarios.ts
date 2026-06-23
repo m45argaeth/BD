@@ -20,19 +20,26 @@ export const SCENARIOS: Scenario[] = [
     id: "jacket-discount",
     biasSlug: "anchoring-bias",
     prompt: {
-      id: "Sebuah jaket awalnya seharga Rp3.000.000. Hari ini didiskon menjadi Rp1.500.000. Apakah menurutmu ini penawaran bagus?",
-      en: "A jacket originally costs $300. Today it is discounted to $150. Would you consider it a good deal?",
+      id: "Sebuah jaket awalnya seharga Rp3.000.000. Hari ini didiskon menjadi Rp1.500.000. Apa yang kamu lakukan?",
+      en: "A jacket originally costs $300. Today it is discounted to $150. What do you do?",
     },
     options: [
       {
         id: "yes",
-        label: { id: "Ya, hematnya besar", en: "Yes, big savings" },
+        label: { id: "Langsung beli, hematnya besar", en: "Buy it now, big savings" },
       },
       {
         id: "depends",
         label: {
-          id: "Tergantung harga wajar jaketnya",
-          en: "It depends on the jacket's fair price",
+          id: "Pikir dulu harga wajar jaketnya",
+          en: "Consider the jacket's fair price first",
+        },
+      },
+      {
+        id: "compare",
+        label: {
+          id: "Cek harga model serupa di toko lain",
+          en: "Check similar models at other stores",
         },
       },
     ],
@@ -58,6 +65,13 @@ export const SCENARIOS: Scenario[] = [
         id: "critique",
         label: { id: "Artikel yang mengkritiknya", en: "Articles criticizing it" },
       },
+      {
+        id: "both",
+        label: {
+          id: "Keduanya, supaya berimbang",
+          en: "Both, to stay balanced",
+        },
+      },
     ],
     biasedOptionId: "support",
     analysis: {
@@ -80,6 +94,13 @@ export const SCENARIOS: Scenario[] = [
       {
         id: "driving",
         label: { id: "Berkendara mobil", en: "Driving a car" },
+      },
+      {
+        id: "stats",
+        label: {
+          id: "Lihat data statistik dulu sebelum menilai",
+          en: "Check the statistics before deciding",
+        },
       },
     ],
     biasedOptionId: "flying",
@@ -107,6 +128,13 @@ export const SCENARIOS: Scenario[] = [
           en: "50% chance to gain $250",
         },
       },
+      {
+        id: "ev",
+        label: {
+          id: "Hitung nilai harapannya dulu",
+          en: "Work out the expected value first",
+        },
+      },
     ],
     biasedOptionId: "sure",
     analysis: {
@@ -127,8 +155,15 @@ export const SCENARIOS: Scenario[] = [
         label: { id: "Yogurt '90% bebas lemak'", en: "Yogurt that is '90% fat-free'" },
       },
       {
+        id: "ten",
+        label: {
+          id: "Yogurt 'mengandung 10% lemak'",
+          en: "Yogurt that 'contains 10% fat'",
+        },
+      },
+      {
         id: "same",
-        label: { id: "Keduanya sama saja", en: "They are exactly the same" },
+        label: { id: "Keduanya identik, hanya beda kata", en: "Both are identical, just worded differently" },
       },
     ],
     biasedOptionId: "ninety",
@@ -154,6 +189,13 @@ export const SCENARIOS: Scenario[] = [
         label: {
           id: "Cek dulu apakah aku benar-benar membutuhkannya",
           en: "Check first whether I actually need it",
+        },
+      },
+      {
+        id: "reviews",
+        label: {
+          id: "Baca ulasan dan kebijakan privasinya dulu",
+          en: "Read reviews and its privacy policy first",
         },
       },
     ],
@@ -182,6 +224,13 @@ export const SCENARIOS: Scenario[] = [
         id: "stop",
         label: { id: "Berhenti dan lakukan hal lain", en: "Stop and do something else" },
       },
+      {
+        id: "skim",
+        label: {
+          id: "Cek ulasan, kalau jelek ya tinggalkan",
+          en: "Check reviews, and drop it if it's bad",
+        },
+      },
     ],
     biasedOptionId: "finish",
     analysis: {
@@ -206,6 +255,13 @@ export const SCENARIOS: Scenario[] = [
         label: {
           id: "Tidak bisa ditentukan dari penampilan",
           en: "Can't tell from appearance",
+        },
+      },
+      {
+        id: "test",
+        label: {
+          id: "Uji keterampilan keduanya dulu",
+          en: "Test both of their skills first",
         },
       },
     ],
