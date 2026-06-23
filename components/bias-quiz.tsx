@@ -99,6 +99,7 @@ export function BiasQuiz() {
   const profileEntries = Object.entries(profile).sort((a, b) => b[1] - a[1])
   const maxCount = profileEntries.length ? profileEntries[0][1] : 0
   const progress = ((pointer + 1) / SCENARIOS.length) * 100
+  const progressStyle: React.CSSProperties = { width: progress + "%" }
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
@@ -118,7 +119,7 @@ export function BiasQuiz() {
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
           <div
             className="h-full rounded-full bg-primary transition-all duration-500"
-            style= width: progress + "%" 
+            style={progressStyle}
           />
         </div>
       </div>
@@ -243,6 +244,7 @@ export function BiasQuiz() {
                 const b = BIAS_MAP.get(slug)
                 if (!b) return null
                 const pct = maxCount ? (count / maxCount) * 100 : 0
+                const barStyle: React.CSSProperties = { width: pct + "%" }
                 return (
                   <div key={slug} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
@@ -252,10 +254,7 @@ export function BiasQuiz() {
                       </span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
-                      <div
-                        className="h-full rounded-full bg-primary"
-                        style= width: pct + "%" 
-                      />
+                      <div className="h-full rounded-full bg-primary" style={barStyle} />
                     </div>
                   </div>
                 )
