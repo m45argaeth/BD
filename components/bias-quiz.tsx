@@ -38,6 +38,22 @@ export function BiasQuiz() {
 
   React.useEffect(() => {
     setProfile(getProfile())
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const id = params.get("scenario")
+      if (id) {
+        const idx = SCENARIOS.findIndex((s) => s.id === id)
+        if (idx >= 0) {
+          setPointer(idx)
+          return
+        }
+      }
+      if (params.get("random") !== null) {
+        setPointer(Math.floor(Math.random() * SCENARIOS.length))
+      }
+    } catch {
+      /* ignore */
+    }
   }, [])
 
   const scenario = SCENARIOS[pointer]

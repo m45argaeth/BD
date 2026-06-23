@@ -31,6 +31,8 @@ export function Landing() {
     setFact(FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)][locale])
   }, [locale])
 
+  const dailyHref = daily ? "/playground?scenario=" + daily.id : "/playground"
+
   return (
     <>
       <section className="container flex flex-col items-center gap-8 py-16 text-center sm:py-24">
@@ -50,7 +52,7 @@ export function Landing() {
             <Link href="/playground">{t.hero.startTest}</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link href="/playground">
+            <Link href="/playground?random=1">
               <Shuffle /> {t.hero.randomScenario}
             </Link>
           </Button>
@@ -138,7 +140,7 @@ export function Landing() {
               </p>
             )}
             <Button asChild className="mt-2 w-fit">
-              <Link href="/playground">
+              <Link href={dailyHref}>
                 {t.sections.dailyCta} <ArrowRight />
               </Link>
             </Button>

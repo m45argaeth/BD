@@ -2,7 +2,7 @@ import { Brain } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 
-export type SiteId = "ebn" | "te" | "ttb" | "bd"
+export type SiteId = "ebn" | "te" | "ttb" | "vfe" | "bd"
 
 export interface SeriesItem {
 	id: SiteId
@@ -26,6 +26,11 @@ export const SERIES: SeriesItem[] = [
 		id: "ttb",
 		name: "Text To Binary",
 		url: "https://ttb-playground.vercel.app",
+	},
+	{
+		id: "vfe",
+		name: "Video Frame Explorer",
+		url: "https://vfe-playground.vercel.app",
 	},
 	{
 		id: "bd",
