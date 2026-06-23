@@ -1,0 +1,110 @@
+"use client"
+
+import Link from "next/link"
+import { Heart } from "lucide-react"
+
+import { useI18n } from "@/lib/i18n"
+import { SITE, UI, SERIES, PORTFOLIO, AUTHOR } from "@/lib/site-config"
+
+export function SiteFooter() {
+  const { locale, t } = useI18n()
+  const ui = UI[locale]
+  const Icon = SITE.icon
+  const year = new Date().getFullYear()
+
+  return (
+    <footer className="border-t border-border/60">
+      <div className="container py-12">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span className="font-semibold tracking-tight">{SITE.name}</span>
+            </div>
+            <p className="max-w-sm text-sm text-muted-foreground">
+              {SITE.tagline[locale]}
+            </p>
+            <p className="max-w-sm text-xs leading-relaxed text-muted-foreground/80">
+              {t.footer.eduNote}
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold">{ui.exploreHeading}</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link href="/playground" className="hover:text-foreground">
+                  {ui.playground}
+                </Link>
+              </li>
+              <li>
+                <Link href="/library" className="hover:text-foreground">
+                  {t.nav.library}
+                </Link>
+              </li>
+              <li>
+                <a
+                  href={PORTFOLIO.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-foreground"
+                >
+                  {ui.portfolio}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold">{ui.seriesHeading}</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              {SERIES.map((item) => {
+                const isCurrent = item.id === SITE.id
+                return (
+                  <li key={item.id}>
+                    {isCurrent ? (
+                      <span className="text-foreground">
+                        {item.name}{" "}
+                        <span className="text-xs text-muted-foreground">
+                          ({ui.current})
+                        </span>
+                      </span>
+                    ) : (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:text-foreground"
+                      >
+                        {item.name}
+                      </a>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-center justify-between gap-2 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row">
+          <p>
+            \u00A9 {year} {SITE.name}
+          </p>
+          <p className="flex items-center gap-1.5">
+            {ui.madeWith} <Heart className="h-3.5 w-3.5 fill-current" /> {ui.by}{" "}
+            <a
+              href={AUTHOR.url}
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium hover:text-foreground"
+            >
+              {AUTHOR.name}
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
+}
