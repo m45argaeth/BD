@@ -1,16 +1,18 @@
 import { SCENARIOS } from "@/lib/data/scenarios"
 
-/** Deterministic scenario of the day based on the local date. */
+/**
+ * Deterministic scenario of the day. Cycles through the scenarios in order
+ * based on the local calendar day, so there are no repeats until every
+ * scenario has been shown once.
+ */
 export function getDailyScenario(date: Date = new Date()) {
-  const key =
-    date.getFullYear() +
-    "-" +
-    (date.getMonth() + 1) +
-    "-" +
-    date.getDate()
-  let hash = 0
-  for (let i = 0; i < key.length; i++) {
-    hash = (hash * 31 + key.charCodeAt(i)) >>> 0
-  }
-  return SCENARIOS[hash % SCENARIOS.length]
+  const startOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  )
+  const dayNumber = Math.floor(startOfDay.getTime() / 86_400_000)
+  const len = SCENARIOS.length
+  const index = ((dayNumber % len) + len) % len
+  return SCENARIOS[index]
 }
