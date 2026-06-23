@@ -35,7 +35,7 @@ export const SERIES: SeriesItem[] = [
 	{
 		id: "bd",
 		name: "Bias Detector",
-		url: "https://bd-playground.vercel.app",
+		url: "https://bd-playground-snowy.vercel.app",
 	},
 ]
 
@@ -46,7 +46,7 @@ export const PORTFOLIO = {
 }
 
 export const AUTHOR = {
-	name: "Ga | Curious About Everything \uD83D\uDD0D",
+	name: "Ga | Curious About Everything 🔍",
 	url: "https://x.com/sinigajelasin",
 }
 
