@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { useI18n } from "@/lib/i18n"
 import { BIASES } from "@/lib/data/biases"
-import { SCENARIOS, type Scenario } from "@/lib/data/scenarios"
+import type { Scenario } from "@/lib/data/scenarios"
 import { getDailyScenario } from "@/lib/daily"
 import { FUN_FACTS } from "@/lib/data/fun-facts"
 
